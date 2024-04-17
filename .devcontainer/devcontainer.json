@@ -1,0 +1,4 @@
+{
+    "name": "Quick-Start",
+    "onCreateCommand": "bash .devcontainer/on-create.sh"
+}
