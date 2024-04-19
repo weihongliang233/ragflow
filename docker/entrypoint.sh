@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# 判断参数中是否包含 "dev"
+if [[ "$@" =~ "dev" ]]; then
+    CURRENT_PATH=".."
+else
+    CURRENT_PATH=""
+fi
+
 /usr/sbin/nginx
 
 export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
@@ -8,7 +15,7 @@ PY=/root/miniconda3/envs/py11/bin/python
 
 function task_exe(){
     while [ 1 -eq 1 ];do
-      $PY rag/svr/task_executor.py $1 $2;
+      $PY $CURRENT_PATH/rag/svr/task_executor.py $1 $2;
     done
 }
 
@@ -16,7 +23,7 @@ function watch_broker(){
   while [ 1 -eq 1 ];do
     C=`ps aux|grep "task_broker.py"|grep -v grep|wc -l`;
     if [ $C -lt 1 ];then
-       $PY rag/svr/task_broker.py &
+       $PY $CURRENT_PATH/rag/svr/task_broker.py &
     fi
     sleep 5;
   done
@@ -35,6 +42,6 @@ do
   task_exe $i $WS &
 done
 
-$PY api/ragflow_server.py
+$PY $CURRENT_PATH/api/ragflow_server.py
 
 wait;

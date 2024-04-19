@@ -1,4 +1,4 @@
-FROM swr.cn-north-4.myhuaweicloud.com/infiniflow/ragflow-base:v1.0
+FROM infiniflow/ragflow:v0.2.0
 USER  root
 
 WORKDIR /ragflow
